@@ -1,0 +1,15 @@
+
+import pandas
+import time
+
+data = pandas.read_csv('male_pushup_records_by_age-v2.csv')
+
+meanPushup = data['Max Pushups'].mean()
+print(f"Mean of Pushup data: {meanPushup}")
+time.sleep(2)
+age = input("List your age here:")
+pushups = input("List how many pushups can you do:")
+
+pushupData = sorted(data['Max Pushups'])
+pushupData.append(pushups)
+pushupCalc = 
