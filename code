@@ -1,15 +1,60 @@
+#installation code
+!mamba install pandas
+!mamba install opendatasets
+!mamba install legacy-cgi
+
+#real code
+
 
 import pandas
 import time
 
-data = pandas.read_csv('male_pushup_records_by_age-v2.csv')
+data = pandas.read_csv('male_pushup_records_ages_13_to_70.csv')
 
 meanPushup = data['Max Pushups'].mean()
 print(f"Mean of Pushup data: {meanPushup}")
 time.sleep(2)
-age = input("List your age here:")
-pushups = input("List how many pushups can you do:")
+age = float(input("List your age here:"))
+
+pushupsMax = float(input("List how many pushups can you do:"))
 
 pushupData = sorted(data['Max Pushups'])
-pushupData.append(pushups)
-pushupCalc = 
+pushupData.append(pushupsMax)
+pushupCalc = []
+
+sortedPushupData = sorted(pushupData)
+
+for pushups in sortedPushupData:
+
+    if pushups > pushupsMax:
+        break
+    else:
+        pushupCalc.append(pushups)
+
+percentile = (len(pushupCalc)/len(sortedPushupData))*100
+print(f"Overall Percentile: {round(percentile,2)}%")
+
+ageData = data[data['Age'] == age]
+if len(ageData) == 0:
+    time.sleep(2)
+    print("We have nobody in your age range to compare you to.")
+    
+else:
+    pushupAgeData = sorted(ageData['Max Pushups'])
+    pushupAgeData.append(pushupsMax)
+    pushupAgeCalc = []
+
+    sortedPushupAgeData = sorted(pushupAgeData)
+
+    for pushupsinAge in sortedPushupAgeData:
+
+        if pushupsinAge > pushupsMax:
+            break
+        else:
+            pushupAgeCalc.append(pushupsinAge)
+
+    agePercentile = (len(pushupAgeCalc)/len(sortedPushupAgeData))*100
+    time.sleep(2)
+    print(f"In your Age range you can do more pushups than {round(agePercentile,2)}% of people!")
+            
+
